@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Series Calculator</title>
+  <link rel="icon" type="image/x-icon" href="golden-ratio.png">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding: 10rem;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 0px 50px;
+      background: linear-gradient(to bottom, #320033, #320033);
+      color: #fff;
+    }
+
+    h1 {
+      color: #919e04;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 65px;
+      margin-top: 0%;
+    }
+
+    h1::after {
+      content: "";
+      width: 7px;
+      height: 60px;
+      background: #ec7fff;
+      display: inline-block;
+      animation: cursor-blink 1.5s steps(2) infinite;
+    }
+
+    p {
+      font-family: 'Roboto Mono', monospace;
+      color: #d2b4de;
+      text-align: left;
+    }
+
+    h2 {
+      display: inline-block;
+      line-height: 2.2;
+      font-family: 'Roboto Mono', monospace;
+      font-weight: bolder;
+      background-color: #060006;
+      padding: 5px 10px 5px 10px;
+    }
+
+    .text-container {
+      display: inline-flex;
+      flex-direction: column;
+      height: 2.5rem;
+      overflow: hidden;
+    }
+
+    .text-container span {
+      height: 2.3rem;
+      color: #ad0e9d;
+      animation: moveUp 10s linear infinite;
+    }
+
+    .hero-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      padding: 100px 100px 100px 120px;
+    }
+
+    .hero-section img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      display: flex;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #0a0000;
+      background-color: rgb(5, 106, 247);
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #b929b9;
+      color: #fff;
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 5px;
+      font-family: 'Roboto Mono', monospace;
+      color: #d2b4de;
+    }
+    
+    .NSC {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #calculator {
+      margin: 40px 80px 120px 80px;
+      padding: 30px 60px 30px 60px;
+      display: block;
+      justify-content: center;
+      border-radius: 40px;
+      box-shadow: 0 6px 28px 0 rgba(245, 242, 242, 0.2);
+      background: #060006;
+      scroll-behavior: smooth;
+    }
+    
+    input,
+    select,
+    button {
+      padding: 10px;
+      font-family: 'Roboto Mono', monospace;
+      margin: 10px;
+      font-size: 16px;
+      border: 5px solid #a9a9a9;
+      background-color: #919e04;
+      border-radius: 10px;
+      color: #fff;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    select,
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #ad0e9d;
+      font-family: 'Roboto Mono', monospace;
+      color: #ffffffa1;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: rgb(5, 106, 247);
+      transition: ease-in;
+      color: #2f421b;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    #result {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      border-radius: 15px;
+      background-color: #1d6685;
+      margin-top: 20px;
+      color: rgb(55, 218, 218);
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    #sequence {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      border-radius: 15px;
+      background-color: #1d6685;
+      margin-top: 30px;
+      color: #d2b4de;
+      font-family: 'Roboto Mono', monospace;
+      font-style: italic;
+    }
+
+    @keyframes cursor-blink {
+      0% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes moveUp {
+      0% {
+        transform: translateY(0);
+      }
+
+      5% {
+        transform: translateY(0);
+      }
+
+      15% {
+        transform: translateY(-2.3rem);
+      }
+
+      25% {
+        transform: translateY(-2.3rem);
+      }
+
+      35% {
+        transform: translateY(-4.6rem);
+      }
+
+      45% {
+        transform: translateY(-4.6rem);
+      }
+
+      55% {
+        transform: translateY(-6.9rem);
+      }
+
+      65% {
+        transform: translateY(-6.9rem);
+      }
+
+      75% {
+        transform: translateY(-9.2rem);
+      }
+
+      95% {
+        transform: translateY(-9.2rem);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @media only screen and (max-width: 768px) {
+      body {
+        margin: 0;
+      }
+
+      .hero-section {
+        padding: 50px 10px;
+      }
+
+      #calculator {
+        margin: 20px 0;
+        padding: 20px;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .btn {
+        font-size: 14px;
+      }
+
+      .NSC {
+        max-width: 100%;
+
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="hero-section">
+    <div style="max-width: 50%;">
+      <h1>Welcome to the Number Series Calculator!</h1>
+      <h2>
+        Choose between:
+        <div class="text-container">
+          <span>Fibonacci</span>
+          <span>Tribonacci</span>
+          <span>Lucas Series</span>
+        </div>
+      </h2>
+      <p><a href="#calculator" class="btn">Go to Calculator ➜</a></p>
+    </div>
+    <img src="gif.png" alt="Hero Image">
+  </div>
+
+  <img src="NSC.png" class="NSC" width="">
+
+  <div id="calculator">
+    <label for="number">Enter a positive integer:</label>
+    <input type="number" id="number" min="0" step="1">
+    <br>
+
+    <label for="seriesType">Select a series type:</label>
+    <select id="seriesType">
+      <option value="fibonacci">Fibonacci</option>
+      <option value="tribonacci">Tribonacci</option>
+      <option value="lucas">Lucas</option>
+    </select>
+    <br>
+
+    <button onclick="calculate()">Calculate</button>
+    <br>
+
+    <p id="result"></p>
+    <p id="sequence"></p>
+  </div>
+
+  <script>
+    function calculate() {
+      const inputNumber = document.getElementById("number").value;
+      const seriesType = document.getElementById("seriesType").value;
+      let result, steps, sequence;
+
+      switch (seriesType) {
+        case "fibonacci":
+          [result, steps, sequence] = fibonacci(inputNumber);
+          break;
+        case "tribonacci":
+          [result, steps, sequence] = tribonacci(inputNumber);
+          break;
+        case "lucas":
+          [result, steps, sequence] = lucas(inputNumber);
+          break;
+        default:
+          result = "Invalid series type";
+      }
+
+      document.getElementById("result").innerHTML = `${capitalize(seriesType)}(${inputNumber}): ${result}`;
+      document.getElementById("sequence").innerHTML = `Sequence: ${sequence.join(', ')}`;
+    }
+
+    function fibonacci(n) {
+      const sequence = [];
+      const steps = [];
+
+      function fib(n) {
+        if (n <= 1) {
+          return n;
+        } else {
+          steps.push(`F(${n}) = F(${n - 1}) + F(${n - 2})`);
+          return fib(n - 1) + fib(n - 2);
+        }
+      }
+
+      for (let i = 0; i <= n; i++) {
+        sequence.push(fib(i));
+      }
+
+      return [sequence[n], steps, sequence];
+    }
+
+    function tribonacci(n) {
+      const sequence = [];
+      const steps = [];
+
+      function trib(n) {
+        if (n === 0) {
+          return 0;
+        } else if (n <= 2) {
+          return 1;
+        } else {
+          steps.push(`T(${n}) = T(${n - 1}) + T(${n - 2}) + T(${n - 3})`);
+          return trib(n - 1) + trib(n - 2) + trib(n - 3);
+        }
+      }
+
+      for (let i = 0; i <= n; i++) {
+        sequence.push(trib(i));
+      }
+
+      return [sequence[n], steps, sequence];
+    }
+
+    function lucas(n) {
+      const sequence = [];
+      const steps = [];
+
+      function luc(n) {
+        if (n === 0) {
+          return 2;
+        } else if (n === 1) {
+          return 1;
+        } else {
+          steps.push(`L(${n}) = L(${n - 1}) + L(${n - 2})`);
+          return luc(n - 1) + luc(n - 2);
+        }
+      }
+
+      for (let i = 0; i <= n; i++) {
+        sequence.push(luc(i));
+      }
+
+      return [sequence[n], steps, sequence];
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  </script>
+</body>
+</html>
